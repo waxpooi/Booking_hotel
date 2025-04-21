@@ -81,7 +81,8 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('verification.notice');
+        return redirect()->route('auth.verified');
+
     }
     //bagian email
     public function resendVerificationEmail(Request $request)

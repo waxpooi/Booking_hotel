@@ -33,6 +33,6 @@ class VerifiedController extends Controller
 
     public function showVerificationNotice()
     {
-        return view('auth.verify');
+        return view('auth.verified');
     }
 }

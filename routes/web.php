@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+
 use App\Http\Controllers\{RoomsController, FacilitiesController, ReservationsController, ReceptionistController, AdminController, AuthController, LocationController, GoogleController};
 
 Route::get('/', fn() => view('home'))->name('home');
@@ -13,12 +15,20 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/logout', 'logout')->name('logout');
 });
 
-Route::get('email/verify', function () {
-    return view('auth.verify');
-})->middleware(['auth', 'signed'])->name('verification.notice');
 
-Route::get('email/verify/{id}/{hash}', [\App\Http\Controllers\Auth\VerifiedController::class, 'verify'])
-    ->middleware(['auth', 'signed'])->name('verification.verify');
+Route::get('/email/verify', [\App\Http\Controllers\Auth\VerifiedController::class, 'showVerificationNotice'])
+    ->middleware('auth')
+    ->name('auth.verified');
+
+Route::get('/email/verify/{id}/{hash}', [\App\Http\Controllers\Auth\VerifiedController::class, 'verify'])
+    ->middleware(['auth', 'signed'])
+    ->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('success', 'Email verifikasi telah dikirim ulang!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::get('/facilities', [FacilitiesController::class, 'GuestIndex'])->name('facilities');
 
@@ -40,9 +50,7 @@ Route::resource('location', LocationController::class);
 Route::middleware(['admin'])->prefix('admin')->as('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 
-    Route::get('/facilities', [FacilitiesController::class, 'index'])->name('facilities.index');
-    Route::get('/facilities/create', [FacilitiesController::class, 'create'])->name('facilities.crud');
-    Route::post('/facilities', [FacilitiesController::class, 'store'])->name('facilities.store');
+    Route::resource('/facilities', FacilitiesController::class)->except(['show']);
 
     Route::resource('/rooms', RoomsController::class)->except(['show']);
     Route::get('/rooms', [RoomsController::class, 'index'])->name('rooms.index');

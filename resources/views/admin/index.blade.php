@@ -102,26 +102,14 @@
                 <!-- Home -->
 
                 <!-- fasilitas -->
-                <li class="nav-item menu-items">
-                    <a class="nav-link" data-toggle="collapse" href="#crud-facilities" aria-expanded="false"
-                        aria-controls="crud-facilities">
-                        <span class="menu-icon">
-                            <i class="mdi mdi-laptop"></i>
-                        </span>
-                        <span class="menu-title">CRUD FASILITAS</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="crud-facilities">
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link" href="{{ route('admin.facilities.index') }}">List
-                                    Fasilitas</a></li>
-                            <li class="nav-item"> <a class="nav-link"
-                                    href="{{ route('admin.facilities.crud') }}">Tambah
-                                    Fasilitas</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <!-- fasilitas -->
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="{{ route('admin.facilities.index') }}">
+                <span class="menu-icon">
+                    <i class="mdi mdi-playlist-play"></i>
+                </span>
+                <span class="menu-title">Crud Fasilitas hotel</span>
+            </a>
+        <!-- fasilitas -->
 
                 {{-- crud room --}}
                 <li class="nav-item menu-items">

@@ -4,7 +4,7 @@
 @section('content')
 <div class="container">
     <h2 class="mb-4">Daftar Fasilitas</h2>
-    <a href="{{ route('admin.facilities.crud') }}" class="btn btn-primary mb-3">Tambah Fasilitas</a>
+    <a href="{{ route('admin.facilities.create') }}" class="btn btn-primary mb-3">Tambah Fasilitas</a>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -26,11 +26,11 @@
                 <td>{{ $facility->name }}</td>
                 <td>{{ $facility->description }}</td>
                 <td>
-                    <a href="{{ route('admin.facilities.crud', $facility->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                    <form action="{{ route('admin.facilities.crud', $facility->id) }}" method="POST" class="d-inline">
+                    <a href="{{ route('admin.facilities.edit', $facility->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <form action="{{ route('admin.facilities.destroy', $facility->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus?')">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
+                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                     </form>
                 </td>
             </tr>

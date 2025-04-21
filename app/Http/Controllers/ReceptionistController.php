@@ -14,7 +14,7 @@ class ReceptionistController extends Controller
 
     public function index()
     {
-        $reservations = Reservation::orderBy('check_in, asc')->get();
+        $reservations = Reservation::orderBy('check_in')->get();
         return view('admin.index', compact('reservations'));
     }
 
@@ -52,7 +52,7 @@ class ReceptionistController extends Controller
 
     public function rejectReservation($id)
     {
-        $reservations = Reservation::FindOrFaill($id);
+        $reservations = Reservation::findOrFail($id);
         $reservations->delete();
 
         return redirect()->route('receptionist.reservations')
