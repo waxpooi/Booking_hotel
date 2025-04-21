@@ -9,9 +9,9 @@ return new class extends Migration {
     {
         Schema::create('facilities', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // Nama fasilitas
-            $table->text('description'); // Deskripsi fasilitas
-            $table->string('image'); // Gambar fasilitas
+            $table->string('name');
+            $table->text('description');
+            $table->string('image');
             $table->timestamps();
         });
     }

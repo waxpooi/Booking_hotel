@@ -14,7 +14,6 @@ class FacilitiesController extends Controller
         return view('admin.facilities.index', compact('facilities'));
     }
 
-
     public function create()
     {
         return view('admin.facilities.create');
@@ -32,7 +31,7 @@ class FacilitiesController extends Controller
             $validated['image'] = $request->file('image')->store('facilities', 'public');
         }
 
-        // Menyimpan data ke database
+
         Facilities::create($validated);
 
         return redirect()->route('admin.facilities.index')->with('success', 'Fasilitas berhasil ditambahkan.');
@@ -53,7 +52,7 @@ class FacilitiesController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            // Hapus gambar lama jika ada
+
             if ($facility->image) {
                 Storage::delete('public/' . $facility->image);
             }

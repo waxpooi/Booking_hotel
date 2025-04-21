@@ -203,6 +203,6 @@
 
 
     <footer class="footer">
-        <p>&copy; 2025 Hotel Waxpoo. Semua hak cipta dilindungi.</p>
+        <p>&copy; ini hotelnya si waxpoo</p>
     </footer>
 @endsection

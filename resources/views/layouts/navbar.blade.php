@@ -16,12 +16,12 @@
     color: white !important;
     padding: 10px 15px;
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-    border-radius: 5px; /* Biar ada efek rounded */
+    border-radius: 5px; 
 }
 
 .navbar-nav .nav-link:hover {
     background-color: rgb(215, 194, 71) !important;
-    color: black !important; /* Teks berubah jadi hitam agar kontras */
+    color: black !important;
 }
 
     </style>

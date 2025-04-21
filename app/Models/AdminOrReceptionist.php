@@ -2,10 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class AdminOrReceptionist extends Model
+class AdminOrReceptionist extends Authenticatable
 {
-    use HasFactory;
+    protected $guard = 'admin'; 
+
+    protected $fillable = [
+        'name', 'email', 'password', 'role'
+    ];
+
+    protected $hidden = [
+        'password',
+    ];
 }
