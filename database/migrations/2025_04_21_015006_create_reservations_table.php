@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->string('email'); // Menambahkan kolom email
+            $table->string('email'); 
             $table->date('check_in');
             $table->date('check_out');
             $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');

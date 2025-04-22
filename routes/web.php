@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
-use App\Http\Controllers\{RoomsController, FacilitiesController, ReservationsController, ReceptionistController, AdminController, AuthController, LocationController, GoogleController};
+use App\Http\Controllers\{RoomsController, FacilitiesController, ReservationsController, ReceptionistController, AdminController, AuthController, LocationController, TiketController};
 
 Route::get('/', fn() => view('home'))->name('home');
 
@@ -14,7 +14,6 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/register', 'register')->name('register.post');
     Route::post('/logout', 'logout')->name('logout');
 });
-
 
 Route::get('/email/verify', [\App\Http\Controllers\Auth\VerifiedController::class, 'showVerificationNotice'])
     ->middleware('auth')
@@ -38,12 +37,16 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/reservation/create/{room_id}', [ReservationsController::class, 'create'])->name('reservation.create');
     Route::get('/reservation/success', [ReservationsController::class, 'success'])->name('reservation.success');
     Route::get('/reservation/{id}', [ReservationsController::class, 'show'])->name('reservation.show');
     Route::get('/reservation', [ReservationsController::class, 'index'])->name('reservation.index');
     Route::post('/reservation', [ReservationsController::class, 'store'])->name('reservation.store');
     Route::post('/reservation/{id}/payment', [ReservationsController::class, 'updatePayment'])->name('reservation.payment');
 });
+
+Route::get('/tiket', [TiketController::class, 'index'])->name('tiket');
+Route::get('/tiket/{id}', [TiketController::class, 'show'])->name('tiket.detail');
 
 Route::resource('location', LocationController::class);
 

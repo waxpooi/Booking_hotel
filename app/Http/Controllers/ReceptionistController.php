@@ -43,7 +43,7 @@ class ReceptionistController extends Controller
     public function acceptReservation($id)
     {
         $reservations = Reservation::findOrFail($id);
-        $reservations->status = 'check_in';
+        $reservations->status = 'confirmed';
         $reservations->save();
 
         return redirect()->route('receptionist.reservations')
@@ -56,6 +56,6 @@ class ReceptionistController extends Controller
         $reservations->delete();
 
         return redirect()->route('receptionist.reservations')
-            ->with('success', 'Reservasi lu di hapus coy');
+            ->with('success', 'Reservasi email itu di hapus');
     }
 }

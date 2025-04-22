@@ -26,12 +26,12 @@ class RoomsController extends Controller
     public function index()
     {
         $rooms = Room::all();
-        return view('admin.rooms.index', compact('rooms')); // Tampilkan index Blade
+        return view('admin.rooms.index', compact('rooms'));
     }
 
     public function create()
     {
-        return view('admin.rooms.create'); // Tampilkan form create
+        return view('admin.rooms.create');
     }
 
     public function store(Request $request)
@@ -60,7 +60,7 @@ class RoomsController extends Controller
     public function edit($id)
     {
         $room = Room::findOrFail($id);
-        return view('admin.rooms.edit', compact('room')); // Tampilkan form edit
+        return view('admin.rooms.edit', compact('room'));
     }
 
     public function update(Request $request, $id)
@@ -76,7 +76,7 @@ class RoomsController extends Controller
 
         $room = Room::findOrFail($id);
 
-        // Menangani gambar jika ada
+
         if ($request->hasFile('image')) {
             $imageName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('storage/rooms'), $imageName);

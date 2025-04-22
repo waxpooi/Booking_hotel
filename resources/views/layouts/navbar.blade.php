@@ -16,7 +16,7 @@
     color: white !important;
     padding: 10px 15px;
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-    border-radius: 5px; 
+    border-radius: 5px;
 }
 
 .navbar-nav .nav-link:hover {
@@ -38,6 +38,7 @@
                 <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('rooms.rooms') }}">Kamar</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('facilities') }}">Fasilitas</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('tiket') }}">Tiketku</a></li>
             </ul>
         </div>
     </div>

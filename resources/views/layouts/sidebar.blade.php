@@ -84,6 +84,11 @@
                      Fasilitas
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('tiket') }}" class="nav-link {{ request()->routeIs('tiket') ? 'active' : '' }}">
+                     Tiketku
+                </a>
+            </li>
         </ul>
     </div>
 

@@ -9,11 +9,13 @@
     <form action="{{ route('reservation.store') }}" method="POST">
         @csrf
         <div class="mb-3">
-            <label for="kamar_id" class="form-label">Pilih Tipe Kamar</label>
+            <label for="room_id" class="form-label">Pilih Tipe Kamar</label>
             <select class="form-control" name="room_id" required>
                 <option value="" disabled selected>Pilih Kamar</option>
                 @foreach ($rooms as $room)
-                    <option value="{{ $room->id }}">{{ $room->room_type }}</option>
+                    <option value="{{ $room->id }}" {{ $room->id == $room->id ? 'selected' : '' }}>
+                        {{ $room->room_type }}
+                    </option>
                 @endforeach
             </select>
         </div>
