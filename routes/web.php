@@ -72,5 +72,5 @@ Route::middleware(['role.receptionist'])
         Route::get('/reservations/filter', [ReceptionistController::class, 'filterByDate'])->name('reservations.filter');
         Route::get('/reservations/search', [ReceptionistController::class, 'searchByEmail'])->name('reservations.search');
         Route::patch('/reservations/{id}/accept', [ReceptionistController::class, 'acceptReservation'])->name('reservations.accept');
-        Route::delete('/reservations/{id}/reject', [ReceptionistController::class, 'rejectReservation'])->name('reservations.reject');
+        Route::patch('/reservations/{id}/cancelled', [ReceptionistController::class, 'cancelledReservation'])->name('reservations.cancelled');
     });

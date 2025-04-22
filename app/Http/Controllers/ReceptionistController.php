@@ -50,12 +50,14 @@ class ReceptionistController extends Controller
             ->with('success', 'reservasi telah di unggah');
     }
 
-    public function rejectReservation($id)
-    {
-        $reservations = Reservation::findOrFail($id);
-        $reservations->delete();
+    public function cancelledReservation($id)
+{
+    $reservation = Reservation::findOrFail($id);
+    $reservation->status = 'cancelled';
+    $reservation->save();
 
-        return redirect()->route('receptionist.reservations')
-            ->with('success', 'Reservasi email itu di hapus');
-    }
+    return redirect()->route('receptionist.reservations')
+        ->with('success', 'Reservasi berhasil ditolak.');
+}
+
 }

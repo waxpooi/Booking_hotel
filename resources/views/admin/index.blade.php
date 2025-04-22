@@ -215,7 +215,7 @@
                                         </div>
                                     </form>
 
-
+                                    {{-- table --}}
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead>
@@ -241,14 +241,46 @@
                                                         <td>{{ $reservation->payment_status }}</td>
                                                         <td>
                                                             @if ($reservation->payment_proof)
-                                                                <a href="{{ asset('storage/payments/' . $reservation->payment_proof) }}"
-                                                                    target="_blank">Lihat</a>
+                                                                <!-- Tombol untuk memicu modal -->
+                                                                <button class="btn btn-sm btn-info"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#paymentModal{{ $reservation->id }}">
+                                                                    Lihat
+                                                                </button>
+
+                                                                <!-- Modal -->
+                                                                <div class="modal fade"
+                                                                    id="paymentModal{{ $reservation->id }}"
+                                                                    tabindex="-1"
+                                                                    aria-labelledby="paymentModalLabel{{ $reservation->id }}"
+                                                                    aria-hidden="true">
+                                                                    <div
+                                                                        class="modal-dialog modal-dialog-centered modal-lg">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title"
+                                                                                    id="paymentModalLabel{{ $reservation->id }}">
+                                                                                    Bukti Pembayaran
+                                                                                </h5>
+                                                                                <button type="button"
+                                                                                    class="btn-close"
+                                                                                    data-bs-dismiss="modal"
+                                                                                    aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div class="modal-body text-center">
+                                                                                <img src="{{ asset('storage/payments/' . $reservation->payment_proof) }}"
+                                                                                    alt="Bukti Pembayaran"
+                                                                                    class="img-fluid">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             @else
                                                                 Tidak ada
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            @if ($reservation->status !== 'Checked-in')
+                                                            @if (!in_array($reservation->status, ['confirmed', 'cancelled']))
                                                                 <form
                                                                     action="{{ route('receptionist.reservations.accept', $reservation->id) }}"
                                                                     method="POST" style="display:inline;">
@@ -256,179 +288,184 @@
                                                                     @method('PATCH')
                                                                     <button type="submit"
                                                                         class="btn btn-success btn-sm"
-                                                                        onclick="return confirm('Yakin ingin menerima reservasi ini?')">Terima</button>
+                                                                        onclick="return confirm('Yakin ingin menerima reservasi ini?')">
+                                                                        Terima
+                                                                    </button>
                                                                 </form>
 
                                                                 <form
-                                                                    action="{{ route('receptionist.reservations.reject', $reservation->id) }}"
+                                                                    action="{{ route('receptionist.reservations.cancelled', $reservation->id) }}"
                                                                     method="POST" style="display:inline;">
                                                                     @csrf
-                                                                    @method('DELETE')
+                                                                    @method('PATCH')
                                                                     <button type="submit"
                                                                         class="btn btn-danger btn-sm"
-                                                                        onclick="return confirm('Yakin ingin menolak dan menghapus reservasi ini?')">Tolak</button>
+                                                                        onclick="return confirm('Yakin ingin menolak reservasi ini?')">
+                                                                        Tolak
+                                                                    </button>
                                                                 </form>
                                                             @else
-                                                                <span class="badge bg-success">Checked-in</span>
+                                                                <span class="badge bg-secondary">Selesai</span>
                                                             @endif
                                                         </td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>
+
                                         @if (session('success'))
-                                            <div class="alert alert-success">
+                                            <div class="alert alert-success mt-3">
                                                 {{ session('success') }}
                                             </div>
                                         @endif
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Reservasi -->
-                    <!-- Maps Section -->
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
 
+                                    <!-- End Reservasi -->
+                                    <!-- Maps Section -->
                                     <div class="row">
-                                        <!-- Tabel Data Pengunjung -->
-                                        <!-- Google Maps -->
-                                        <div class="col-md-7">
-                                            <div id="audience-map" style="height: 400px;"></div>
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-body">
+
+                                                    <div class="row">
+                                                        <!-- Tabel Data Pengunjung -->
+                                                        <!-- Google Maps -->
+                                                        <div class="col-md-7">
+                                                            <div id="audience-map" style="height: 400px;"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+
+                                    <!-- Form untuk menyimpan nama kota -->
+                                    <form id="save-location-form" method="POST">
+                                        @csrf
+                                        <input type="hidden" id="city" name="city">
+                                    </form>
+
+                                    <footer class="footer">
+                                        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                                            <span
+                                                class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright
+                                                ©
+                                                bootstrapdash.com 2020</span>
+                                            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
+                                                Free <a href="https://www.bootstrapdash.com/bootstrap-admin-template/"
+                                                    target="_blank">Bootstrap admin templates</a> from
+                                                Bootstrapdash.com</span>
+                                        </div>
+                                    </footer>
+                                    <!-- partial -->
                                 </div>
+                                <!-- main-panel ends -->
                             </div>
+                            <!-- page-body-wrapper ends -->
                         </div>
-                    </div>
+                        <!-- container-scroller -->
+                        <!-- plugins:js -->
+                        <script src="assets/vendors/js/vendor.bundle.base.js"></script>
+                        <!-- endinject -->
+                        <!-- Plugin js for this page -->
+                        <script src="assets/vendors/chart.js/Chart.min.js"></script>
+                        <script src="assets/vendors/progressbar.js/progressbar.min.js"></script>
 
-                    <!-- Form untuk menyimpan nama kota -->
-                    <form id="save-location-form" method="POST">
-                        @csrf
-                        <input type="hidden" id="city" name="city">
-                    </form>
+                        <script src="assets/vendors/owl-carousel-2/owl.carousel.min.js"></script>
+                        <!-- End plugin js for this page -->
+                        <!-- inject:js -->
+                        <script src="assets/js/off-canvas.js"></script>
+                        <script src="assets/js/hoverable-collapse.js"></script>
+                        <script src="assets/js/misc.js"></script>
+                        <script src="assets/js/settings.js"></script>
+                        <script src="assets/js/todolist.js"></script>
+                        <!-- endinject -->
+                        <!-- Custom js for this page -->
+                        <script src="assets/js/dashboard.js"></script>
+                        <!-- End custom js for this page -->
+                        <!-- Google Maps API -->
+                        <script
+                            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7Gx3Xd8osZ-MXFKdL44YOtQOGx7aWnl8&libraries=places&callback=initMap"
+                            async defer></script>
 
-                    <footer class="footer">
-                        <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright ©
-                                bootstrapdash.com 2020</span>
-                            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a
-                                    href="https://www.bootstrapdash.com/bootstrap-admin-template/"
-                                    target="_blank">Bootstrap admin templates</a> from Bootstrapdash.com</span>
-                        </div>
-                    </footer>
-                    <!-- partial -->
-                </div>
-                <!-- main-panel ends -->
-            </div>
-            <!-- page-body-wrapper ends -->
-        </div>
-        <!-- container-scroller -->
-        <!-- plugins:js -->
-        <script src="assets/vendors/js/vendor.bundle.base.js"></script>
-        <!-- endinject -->
-        <!-- Plugin js for this page -->
-        <script src="assets/vendors/chart.js/Chart.min.js"></script>
-        <script src="assets/vendors/progressbar.js/progressbar.min.js"></script>
+                        <script>
+                            let map;
+                            let markers = [];
 
-        <script src="assets/vendors/owl-carousel-2/owl.carousel.min.js"></script>
-        <!-- End plugin js for this page -->
-        <!-- inject:js -->
-        <script src="assets/js/off-canvas.js"></script>
-        <script src="assets/js/hoverable-collapse.js"></script>
-        <script src="assets/js/misc.js"></script>
-        <script src="assets/js/settings.js"></script>
-        <script src="assets/js/todolist.js"></script>
-        <!-- endinject -->
-        <!-- Custom js for this page -->
-        <script src="assets/js/dashboard.js"></script>
-        <!-- End custom js for this page -->
-        <!-- Google Maps API -->
-        <script
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7Gx3Xd8osZ-MXFKdL44YOtQOGx7aWnl8&libraries=places&callback=initMap"
-            async defer></script>
+                            function initMap() {
+                                map = new google.maps.Map(document.getElementById("audience-map"), {
+                                    center: {
+                                        lat: 20.5937,
+                                        lng: 78.9629
+                                    },
+                                    zoom: 2
+                                });
 
-        <script>
-            let map;
-            let markers = [];
+                                const countries = [{
+                                        name: "USA",
+                                        lat: 37.0902,
+                                        lng: -95.7129,
+                                        visitors: 1500,
+                                        percentage: "56.35%"
+                                    },
+                                    {
+                                        name: "Germany",
+                                        lat: 51.1657,
+                                        lng: 10.4515,
+                                        visitors: 800,
+                                        percentage: "33.25%"
+                                    },
+                                    {
+                                        name: "Australia",
+                                        lat: -25.2744,
+                                        lng: 133.7751,
+                                        visitors: 760,
+                                        percentage: "15.45%"
+                                    },
+                                    {
+                                        name: "United Kingdom",
+                                        lat: 55.3781,
+                                        lng: -3.4360,
+                                        visitors: 450,
+                                        percentage: "25.00%"
+                                    },
+                                    {
+                                        name: "Romania",
+                                        lat: 45.9432,
+                                        lng: 24.9668,
+                                        visitors: 620,
+                                        percentage: "10.25%"
+                                    },
+                                    {
+                                        name: "Brazil",
+                                        lat: -14.2350,
+                                        lng: -51.9253,
+                                        visitors: 230,
+                                        percentage: "75.00%"
+                                    }
+                                ];
 
-            function initMap() {
-                map = new google.maps.Map(document.getElementById("audience-map"), {
-                    center: {
-                        lat: 20.5937,
-                        lng: 78.9629
-                    },
-                    zoom: 2
-                });
+                                let tableBody = document.getElementById("country-data");
 
-                const countries = [{
-                        name: "USA",
-                        lat: 37.0902,
-                        lng: -95.7129,
-                        visitors: 1500,
-                        percentage: "56.35%"
-                    },
-                    {
-                        name: "Germany",
-                        lat: 51.1657,
-                        lng: 10.4515,
-                        visitors: 800,
-                        percentage: "33.25%"
-                    },
-                    {
-                        name: "Australia",
-                        lat: -25.2744,
-                        lng: 133.7751,
-                        visitors: 760,
-                        percentage: "15.45%"
-                    },
-                    {
-                        name: "United Kingdom",
-                        lat: 55.3781,
-                        lng: -3.4360,
-                        visitors: 450,
-                        percentage: "25.00%"
-                    },
-                    {
-                        name: "Romania",
-                        lat: 45.9432,
-                        lng: 24.9668,
-                        visitors: 620,
-                        percentage: "10.25%"
-                    },
-                    {
-                        name: "Brazil",
-                        lat: -14.2350,
-                        lng: -51.9253,
-                        visitors: 230,
-                        percentage: "75.00%"
-                    }
-                ];
-
-                let tableBody = document.getElementById("country-data");
-
-                countries.forEach((country, index) => {
+                                countries.forEach((country, index) => {
 
 
-                    marker.addListener("dragend", function(event) {
-                        console.log(`${country.name} dipindahkan ke:`, event.latLng.lat(), event.latLng.lng());
-                    });
+                                    marker.addListener("dragend", function(event) {
+                                        console.log(`${country.name} dipindahkan ke:`, event.latLng.lat(), event.latLng.lng());
+                                    });
 
-                    markers.push(marker);
+                                    markers.push(marker);
 
 
-                    let row = `<tr>
+                                    let row = `<tr>
                 <td>${country.name}</td>
                 <td class="text-right">${country.visitors}</td>
                 <td class="text-right font-weight-medium">${country.percentage}</td>
             </tr>`;
-                    tableBody.innerHTML += row;
-                });
-            }
-        </script>
+                                    tableBody.innerHTML += row;
+                                });
+                            }
+                        </script>
 </body>
 
 </html>
