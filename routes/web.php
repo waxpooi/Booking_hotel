@@ -43,6 +43,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/reservation', [ReservationsController::class, 'index'])->name('reservation.index');
     Route::post('/reservation', [ReservationsController::class, 'store'])->name('reservation.store');
     Route::post('/reservation/{id}/payment', [ReservationsController::class, 'updatePayment'])->name('reservation.payment');
+    Route::get('/reservations/{id}/download', [ReservationsController::class, 'download'])->name('reservations.download');
+
 });
 
 Route::get('/tiket', [TiketController::class, 'index'])->name('tiket');

@@ -60,8 +60,8 @@
             <span class="nav-link">Navigation</span>
         </li>
 
-         <!-- Home -->
-         <li class="nav-item menu-items">
+        <!-- Home -->
+        <li class="nav-item menu-items">
             <a class="nav-link" href="{{ route('admin.dashboard') }}">
                 <span class="menu-icon">
                     <i class="mdi mdi-speedometer"></i>
@@ -79,21 +79,20 @@
                 </span>
                 <span class="menu-title">Crud Fasilitas hotel</span>
             </a>
-        <!-- fasilitas -->
+            <!-- fasilitas -->
 
-       {{-- crud room --}}
-       <li class="nav-item menu-items">
-        <a class="nav-link" href="{{ route('admin.rooms.index') }}">
-            <span class="menu-icon">
-                <i class="mdi mdi-playlist-play"></i>
-            </span>
-            <span class="menu-title">Crud Rooms</span>
-        </a>
-        {{-- crud room --}}
-
-    </li>
-        </li>
+            {{-- crud room --}}
         <li class="nav-item menu-items">
+            <a class="nav-link" href="{{ route('admin.rooms.index') }}">
+                <span class="menu-icon">
+                    <i class="mdi mdi-playlist-play"></i>
+                </span>
+                <span class="menu-title">Crud Rooms</span>
+            </a>
+            {{-- crud room --}}
+
+        </li>
+        {{-- <li class="nav-item menu-items">
             <a class="nav-link" href="pages/tables/basic-table.html">
                 <span class="menu-icon">
                     <i class="mdi mdi-table-large"></i>
@@ -143,6 +142,6 @@
                 </span>
                 <span class="menu-title">Documentation</span>
             </a>
-        </li>
+        </li> --}}
     </ul>
 </nav>

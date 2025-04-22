@@ -11,27 +11,32 @@
             Belum ada reservasi.
         </div>
     @else
-        <div class="row">
-            @foreach($reservations as $reservation)
-                <div class="col-md-6 mb-4">
-                    <div class="card shadow-sm p-3">
-                        <h5 class="mb-2">Check-in: {{ $reservation->check_in }}</h5>
-                        <p>Email: {{ $reservation->email }}</p>
-                        <p>Status:
-                            <span class="badge bg-warning text-dark">{{ ucfirst($reservation->status) }}</span>
-                        </p>
-                        <p>Pembayaran:
-                            @if($reservation->payment_status == 'paid')
-                                <span class="badge bg-success">Lunas</span>
-                            @else
-                                <span class="badge bg-danger">Belum Dibayar</span>
-                            @endif
-                        </p>
-                        {{-- <a href="{{ route('tiket.detail', $reservation->id) }}" class="btn btn-primary btn-sm mt-2">Lihat Detail</a> --}}
-                    </div>
+    <div class="row">
+        @foreach($reservations as $reservation)
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm p-3">
+                    <h5 class="mb-2">Check-in: {{ $reservation->check_in }}</h5>
+                    <p>Email: {{ $reservation->email }}</p>
+                    <p>Status:
+                        <span class="badge
+                            {{ $reservation->status === 'confirmed' ? 'bg-success' : 'bg-warning text-dark' }}">
+                            {{ ucfirst($reservation->status) }}
+                        </span>
+                    </p>
+
+                    @if($reservation->status === 'confirmed')
+                        <p><strong>ID Booking:</strong> {{ $reservation->id }}</p>
+
+                        <a href="{{ route('reservations.download', $reservation->id) }}"
+                            class="btn btn-sm btn-outline-primary mt-2" target="_blank">
+                            <i class="bi bi-download"></i> Unduh Bukti Pembayaran (PDF)
+                         </a>
+
+                    @endif
                 </div>
-            @endforeach
-        </div>
+            </div>
+        @endforeach
+    </div>
     @endif
 </div>
 @endsection

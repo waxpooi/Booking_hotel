@@ -1,29 +1,34 @@
 <head>
     <style>
         .navbar {
-    background-color: black !important;
-    padding: 15px 0;
-}
+            background-color: transparent !important;
+            padding: 15px 0;
+            transition: background-color 0.3s ease;
+            z-index: 999;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+        }
 
-.navbar-brand {
-    font-size: 24px;
-    font-weight: bold;
-    color: white !important;
-    margin-left: 12%;
-}
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: white !important;
+            margin-left: 12%;
+        }
 
-.navbar-nav .nav-link {
-    color: white !important;
-    padding: 10px 15px;
-    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-    border-radius: 5px;
-}
+        .navbar-nav .nav-link {
+            color: white !important;
+            padding: 10px 15px;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+            border-radius: 5px;
+        }
 
-.navbar-nav .nav-link:hover {
-    background-color: rgb(215, 194, 71) !important;
-    color: black !important;
-}
-
+        .navbar-nav .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.8) !important;
+            color: black !important;
+        }
     </style>
 </head>
 

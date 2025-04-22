@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
-Use App\Models\Room;
+use App\Models\Room;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ReservationsController extends Controller
 {
@@ -17,14 +18,14 @@ class ReservationsController extends Controller
     }
 
     public function create($room_id)
-{
+    {
 
-    $room = Room::findOrFail($room_id);
+        $room = Room::findOrFail($room_id);
 
-    $rooms = Room::all();
+        $rooms = Room::all();
 
-    return view('reservation.create', compact('room', 'rooms'));
-}
+        return view('reservation.create', compact('room', 'rooms'));
+    }
 
     public function store(Request $request)
     {
@@ -106,5 +107,17 @@ class ReservationsController extends Controller
 
         return redirect()->route('tiket.detail', $reservation->id)
             ->with('success', 'Bukti pembayaran berhasil diunggah!');
+    }
+
+    public function download($id)
+    {
+        $reservation = Reservation::findOrFail($id);
+
+        if ($reservation->status !== 'confirmed') {
+            abort(403, 'Reservasi belum dikonfirmasi.');
+        }
+
+        $pdf = Pdf::loadView('tiket.pdf', compact('reservation'));
+        return $pdf->download('Bukti_Reservasi_' . $reservation->id . '.pdf');
     }
 }

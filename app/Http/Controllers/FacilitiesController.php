@@ -53,13 +53,12 @@ class FacilitiesController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-
             if ($facility->image) {
                 Storage::delete('public/' . $facility->image);
             }
             $validated['image'] = $request->file('image')->store('facilities', 'public');
         }
-
+        $facility->update($validated);
         return redirect()->route('admin.facilities.index')->with('success', 'Fasilitas berhasil diperbarui.');
     }
 
@@ -75,9 +74,8 @@ class FacilitiesController extends Controller
     }
 
     public function guestIndex()
-{
-    $facilities = Facilities::all();
-    return view('facilities.index', compact('facilities'));
-}
-
+    {
+        $facilities = Facilities::all();
+        return view('facilities.index', compact('facilities'));
+    }
 }
